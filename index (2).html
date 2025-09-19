@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tostopia - Menü</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF4757, #FF3742);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .cart-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #FFD700;
+            color: #FF4757;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .search-container {
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-icon {
+            color: #FF4757;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .categories {
+            padding: 0 20px 20px;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .category-tab {
+            background: #fff;
+            border: 2px solid #eee;
+            border-radius: 25px;
+            padding: 10px 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-tab.active {
+            background: #FF4757;
+            color: white;
+            border-color: #FF4757;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .item-favorite {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .item-favorite:hover {
+            background: #FF4757;
+            color: white;
+        }
+
+        .item-info {
+            padding: 20px;
+        }
+
+        .item-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .item-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            color: #FFD700;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .item-description {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #FF4757;
+        }
+
+        .order-btn {
+            background: #FF4757;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .order-btn:hover {
+            background: #FF3742;
+            transform: scale(1.05);
+        }
+
+        .contact-section {
+            background: white;
+            margin: 30px 20px 20px;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-section h3 {
+            color: #FF4757;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .contact-icon {
+            color: #FF4757;
+            font-size: 1.2em;
+        }
+
+        /* Sepet Modal */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .cart-header {
+            background: #FF4757;
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: #666;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background: #FF4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity {
+            min-width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .cart-total {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .total-price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #FF4757;
+            margin-bottom: 15px;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+        }
+
+        .whatsapp-btn:hover {
+            background: #22C55E;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .categories {
+                padding: 0 15px 15px;
+            }
+            
+            .search-container {
+                margin: 15px;
+            }
+
+            .cart-content {
+                width: 95%;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🍞 Tostopia 🍞</h1>
+        <p>Lezzet Dolu Anlar İçin Doğru Adres</p>
+        <div class="cart-icon" onclick="openCart()">
+            🛒
+            <div class="cart-count" id="cartCount">0</div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Menüde ara..." id="searchInput">
+        </div>
+
+        <div class="categories">
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="showCategory('all')">Tümü</button>
+                <button class="category-tab" onclick="showCategory('tost')">🥪 Tostlar</button>
+                <button class="category-tab" onclick="showCategory('hamburger')">🍔 Hamburger</button>
+                <button class="category-tab" onclick="showCategory('kofte')">🥙 Köfte Ekmek</button>
+                <button class="category-tab" onclick="showCategory('icecek')">🥤 İçecekler</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- TOSTLAR -->
+                <div class="menu-item" data-category="tost">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop');">🧀</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Klasik Kaşarlı Tost</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.8) • 127 yorum</span>
+                        </div>
+                        <div class="item-description">Taze ekmek arası bol kaşar peyniri ile hazırlanan klasik lezzet</div>
+                        <div class="item-footer">
+                            <div class="item-price">25₺</div>
+                            <button class="order-btn" onclick="addToCart('Klasik Kaşarlı Tost', 25)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="tost">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=300&fit=crop');">🥓</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Sucuklu Kaşarlı Tost</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.9) • 89 yorum</span>
+                        </div>
+                        <div class="item-description">Nefis sucuk ve eriyen kaşar peyniri ile</div>
+                        <div class="item-footer">
+                            <div class="item-price">35₺</div>
+                            <button class="order-btn" onclick="addToCart('Sucuklu Kaşarlı Tost', 35)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="tost">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1549388604-817d15aa0110?w=400&h=300&fit=crop');">🍄</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Mantarlı Kaşarlı Tost</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.6) • 65 yorum</span>
+                        </div>
+                        <div class="item-description">Taze mantar, kaşar peyniri ve yeşilliklerle</div>
+                        <div class="item-footer">
+                            <div class="item-price">30₺</div>
+                            <button class="order-btn" onclick="addToCart('Mantarlı Kaşarlı Tost', 30)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="tost">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop');">🥩</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Kavurmalı Kaşarlı Tost</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.7) • 43 yorum</span>
+                        </div>
+                        <div class="item-description">Özel et kavurma ve kaşar peyniri</div>
+                        <div class="item-footer">
+                            <div class="item-price">40₺</div>
+                            <button class="order-btn" onclick="addToCart('Kavurmalı Kaşarlı Tost', 40)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="tost">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop');">🍅</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Domatesli Kaşarlı Tost</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.5) • 78 yorum</span>
+                        </div>
+                        <div class="item-description">Taze domates, kaşar peyniri ve fesleğen</div>
+                        <div class="item-footer">
+                            <div class="item-price">28₺</div>
+                            <button class="order-btn" onclick="addToCart('Domatesli Kaşarlı Tost', 28)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="tost">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop');">🥪</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Karışık Tost</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.8) • 156 yorum</span>
+                        </div>
+                        <div class="item-description">Sucuk, salam, kaşar, domates - hepsinden biraz</div>
+                        <div class="item-footer">
+                            <div class="item-price">38₺</div>
+                            <button class="order-btn" onclick="addToCart('Karışık Tost', 38)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HAMBURGERLER -->
+                <div class="menu-item" data-category="hamburger">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop');">🗗</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Tavuk Hamburger</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.7) • 234 yorum</span>
+                        </div>
+                        <div class="item-description">Izgara tavuk göğsü, marul, domates, turşu, özel sos</div>
+                        <div class="item-footer">
+                            <div class="item-price">45₺</div>
+                            <button class="order-btn" onclick="addToCart('Tavuk Hamburger', 45)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="hamburger">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400&h=300&fit=crop');">🍔</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Cheeseburger</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.9) • 189 yorum</span>
+                        </div>
+                        <div class="item-description">Dana köfte, cheddar peyniri, marul, domates, soğan</div>
+                        <div class="item-footer">
+                            <div class="item-price">50₺</div>
+                            <button class="order-btn" onclick="addToCart('Cheeseburger', 50)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="hamburger">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&h=300&fit=crop');">🥓</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Bacon Burger</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.6) • 145 yorum</span>
+                        </div>
+                        <div class="item-description">Dana köfte, crispy bacon, cheddar, marul, domates</div>
+                        <div class="item-footer">
+                            <div class="item-price">55₺</div>
+                            <button class="order-btn" onclick="addToCart('Bacon Burger', 55)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="hamburger">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1606755962773-d324e9dbd21b?w=400&h=300&fit=crop');">🌶️</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Acılı Tavuk Burger</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.5) • 98 yorum</span>
+                        </div>
+                        <div class="item-description">Baharatlı tavuk, acı sos, marul, domates</div>
+                        <div class="item-footer">
+                            <div class="item-price">48₺</div>
+                            <button class="order-btn" onclick="addToCart('Acılı Tavuk Burger', 48)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KÖFTE EKMEK -->
+                <div class="menu-item" data-category="kofte">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&h=300&fit=crop');">🖖</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Klasik Köfte Ekmek</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.4) • 167 yorum</span>
+                        </div>
+                        <div class="item-description">Ev yapımı köfte, domates, soğan, marul</div>
+                        <div class="item-footer">
+                            <div class="item-price">35₺</div>
+                            <button class="order-btn" onclick="addToCart('Klasik Köfte Ekmek', 35)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="kofte">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop');">🧀</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Kaşarlı Köfte Ekmek</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.7) • 134 yorum</span>
+                        </div>
+                        <div class="item-description">Köfte, eriyen kaşar peyniri, domates, marul</div>
+                        <div class="item-footer">
+                            <div class="item-price">40₺</div>
+                            <button class="order-btn" onclick="addToCart('Kaşarlı Köfte Ekmek', 40)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="kofte">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1606755962773-d324e9dbd21b?w=400&h=300&fit=crop');">🌶️</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Acılı Köfte Ekmek</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.3) • 89 yorum</span>
+                        </div>
+                        <div class="item-description">Baharatlı köfte, acı sos, domates, soğan</div>
+                        <div class="item-footer">
+                            <div class="item-price">38₺</div>
+                            <button class="order-btn" onclick="addToCart('Acılı Köfte Ekmek', 38)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- İÇECEKLER -->
+                <div class="menu-item" data-category="icecek">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=300&fit=crop');">☕</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Çay</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.8) • 345 yorum</span>
+                        </div>
+                        <div class="item-description">Taze demlenmiş Türk çayı</div>
+                        <div class="item-footer">
+                            <div class="item-price">8₺</div>
+                            <button class="order-btn" onclick="addToCart('Çay', 8)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="icecek">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=300&fit=crop');">💧</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Su</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.2) • 67 yorum</span>
+                        </div>
+                        <div class="item-description">500ml şişe su</div>
+                        <div class="item-footer">
+                            <div class="item-price">5₺</div>
+                            <button class="order-btn" onclick="addToCart('Su', 5)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="icecek">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=400&h=300&fit=crop');">🥤</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Coca Cola</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.9) • 234 yorum</span>
+                        </div>
+                        <div class="item-description">330ml soğuk teneke kutu</div>
+                        <div class="item-footer">
+                            <div class="item-price">12₺</div>
+                            <button class="order-btn" onclick="addToCart('Coca Cola', 12)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="icecek">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&h=300&fit=crop');">🍊</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Fanta</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.6) • 178 yorum</span>
+                        </div>
+                        <div class="item-description">330ml portakallı gazoz</div>
+                        <div class="item-footer">
+                            <div class="item-price">12₺</div>
+                            <button class="order-btn" onclick="addToCart('Fanta', 12)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="icecek">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1625740136006-d068ba3c723e?w=400&h=300&fit=crop');">🍋</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Sprite</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">(4.5) • 145 yorum</span>
+                        </div>
+                        <div class="item-description">330ml limonlu gazoz</div>
+                        <div class="item-footer">
+                            <div class="item-price">12₺</div>
+                            <button class="order-btn" onclick="addToCart('Sprite', 12)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="icecek">
+                    <div class="item-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571212515416-ee345513c382?w=400&h=300&fit=crop');">🧃</div>
+                    <button class="item-favorite">♡</button>
+                    <div class="item-info">
+                        <div class="item-name">Ayran</div>
+                        <div class="item-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">(4.7) • 289 yorum</span>
+                        </div>
+                        <div class="item-description">Ev yapımı taze ayran</div>
+                        <div class="item-footer">
+                            <div class="item-price">10₺</div>
+                            <button class="order-btn" onclick="addToCart('Ayran', 10)">SEPETE EKLE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sepet Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>🛒 Sepetim</h2>
+                <button class="cart-close" onclick="closeCart()">×</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <div class="empty-cart">
+                    <p>Sepetiniz boş</p>
+                    <p>Lezzetli ürünlerimizi keşfedin!</p>
+                </div>
+            </div>
+            <div class="cart-total" id="cartTotal" style="display: none;">
+                <div class="total-price" id="totalPrice">0₺</div>
+                <button class="whatsapp-btn" onclick="sendWhatsAppOrder()">
+                    📱 WhatsApp ile Sipariş Ver
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-section">
+        <h3>📞 İletişim & Adres</h3>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <span class="contact-icon">📱</span>
+                <span><strong>Telefon:</strong> 0536 332 07 89</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">✉️</span>
+                <span><strong>E-mail:</strong> hffhakan@gmail.com</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📍</span>
+                <span><strong>Adres:</strong> Seyrantepe, Dörtyol Merkez, BPET Petrol Yanı</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">🏢</span>
+                <span><strong>İlçe:</strong> Bağlar / Diyarbakır</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">👤</span>
+                <span><strong>Sahibi:</strong> Hakan Aytaş</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sepet değişkenleri
+        let cart = {};
+        let cartCount = 0;
+
+        // Kategori filtreleme
+        function showCategory(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const tabs = document.querySelectorAll('.category-tab');
+            
+            // Tüm tabları pasif yap
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Tıklanan tabı aktif yap
+            event.target.classList.add('active');
+            
+            // Ürünleri filtrele
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.classList.remove('hidden');
+                } else {
+                    if (item.dataset.category === category) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // Arama fonksiyonu
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.menu-item');
+            
+            items.forEach(item => {
+                const name = item.querySelector('.item-name').textContent.toLowerCase();
+                const description = item.querySelector('.item-description').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || description.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+
+        // Favoriler
+        document.querySelectorAll('.item-favorite').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (this.textContent === '♡') {
+                    this.textContent = '♥';
+                    this.style.color = '#FF4757';
+                } else {
+                    this.textContent = '♡';
+                    this.style.color = '';
+                }
+            });
+        });
+
+        // Sepete ekleme fonksiyonu
+        function addToCart(itemName, price) {
+            if (cart[itemName]) {
+                cart[itemName].quantity += 1;
+            } else {
+                cart[itemName] = {
+                    price: price,
+                    quantity: 1
+                };
+            }
+            updateCartDisplay();
+            
+            // Başarılı ekleme animasyonu
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Sepetten çıkarma fonksiyonu
+        function removeFromCart(itemName) {
+            if (cart[itemName]) {
+                if (cart[itemName].quantity > 1) {
+                    cart[itemName].quantity -= 1;
+                } else {
+                    delete cart[itemName];
+                }
+                updateCartDisplay();
+            }
+        }
+
+        // Ürünü sepetten tamamen kaldırma
+        function deleteFromCart(itemName) {
+            delete cart[itemName];
+            updateCartDisplay();
+        }
+
+        // Sepet görünümünü güncelleme
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const totalPrice = document.getElementById('totalPrice');
+            const cartCountElement = document.getElementById('cartCount');
+            
+            // Toplam ürün sayısını hesapla
+            cartCount = Object.values(cart).reduce((total, item) => total + item.quantity, 0);
+            cartCountElement.textContent = cartCount;
+            
+            // Sepet boşsa
+            if (cartCount === 0) {
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <p>Sepetiniz boş</p>
+                        <p>Lezzetli ürünlerimizi keşfedin!</p>
+                    </div>
+                `;
+                cartTotal.style.display = 'none';
+                return;
+            }
+            
+            // Sepet dolu ise
+            let itemsHTML = '';
+            let total = 0;
+            
+            Object.entries(cart).forEach(([itemName, item]) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                itemsHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${itemName}</div>
+                            <div class="cart-item-price">${item.price}₺ × ${item.quantity} = ${itemTotal}₺</div>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button class="quantity-btn" onclick="removeFromCart('${itemName}')">-</button>
+                            <span class="quantity">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="addToCart('${itemName}', ${item.price})">+</button>
+                            <button class="quantity-btn" onclick="deleteFromCart('${itemName}')" style="background: #dc3545; margin-left: 10px;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = itemsHTML;
+            totalPrice.textContent = `Toplam: ${total}₺`;
+            cartTotal.style.display = 'block';
+        }
+
+        // Sepeti aç
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        // Sepeti kapat
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        // WhatsApp sipariş gönderme
+        function sendWhatsAppOrder() {
+            if (cartCount === 0) {
+                alert('Sepetinizde ürün yok!');
+                return;
+            }
+            
+            const phone = '05363320789';
+            let message = '🍞 *Tostopia Siparişim* 🍞\n\n';
+            let total = 0;
+            
+            Object.entries(cart).forEach(([itemName, item]) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `• ${itemName}\n  ${item.quantity} adet × ${item.price}₺ = ${itemTotal}₺\n\n`;
+            });
+            
+            message += `💰 *Toplam: ${total}₺*\n\n`;
+            message += `📍 *Teslimat Adresi:*\nSeyrantepe, Dörtyol Merkez, BPET Petrol Yanı, Bağlar/Diyarbakır\n\n`;
+            message += `👤 *İletişim:* 0536 332 07 89`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/90${phone}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Modal dışına tıklayınca kapatma
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCart();
+            }
+        });
+    </script>
+</body>
+</html>
